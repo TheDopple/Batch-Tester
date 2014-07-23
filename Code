@@ -1,0 +1,45 @@
+Batch-Tester
+============
+
+Batch testing via a voltage detector trigger
+// radio control circuit pins
+int radioA = 1;			//power relay radio initial
+int radioARF = 5;		//rf relay initial
+int radioF = 4;			//power relay radio final
+int radioFRF = 8;		//rf relay final
+
+// Voltage sensor pin
+const int V1 = 12;	//Voltage trigger
+int inPin = 11;		//Trigger input
+volatile int triggerstate = 0;	
+
+
+void setup() {
+//set radio power relay pins as outputs:
+	for(int active = radioA; active <= radioF; active++)  {
+		pinMode(active, OUTPUT);
+	}
+//set rf relay pins as outputs
+	for(int activeRF = radioARF; activeRF <= radioFRF; activeRF++)  {
+		pinMode(activeRF, OUTPUT);
+	}
+//activate voltage sensor circuit
+	pinMode(V1, OUTPUT);
+	pinMode(inPin, INPUT);
+	attachInterrupt(11, Vsensordelay, FALLING)
+}
+
+void loop (){
+//Move to next active relay if LOW after delay	
+		for(int active = radioA; active <= radioF; active++)  {
+//charge Radio Power Relay control circuit
+			digitalwrite(active, HIGH)  }
+//Move to next active relay if LOW after delay	
+		for(int activeRF = radioARF; activeRF <= radioFRF; activeRF++)  {
+//charge Radio RF control circuit
+			digitalwrite(activeRF, HIGH)  }
+}
+
+void Vsensordelay () {
+delay(10000)
+}
